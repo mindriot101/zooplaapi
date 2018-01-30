@@ -15,7 +15,9 @@ fn main() {
 fn run() -> Result<()> {
     let zoopla_key = env::var("ZOOPLA_KEY")?;
     let mut api = Zoopla::new_session(&zoopla_key)?;
-    let properties = api.properties(ZooplaQuerySettings::default())?;
+    let properties = api.properties(ZooplaQuerySettings {
+        ..Default::default()
+    })?;
     for property in properties.listing {
         println!("Property: {:?}", property);
     }

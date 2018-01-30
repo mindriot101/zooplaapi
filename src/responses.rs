@@ -13,26 +13,26 @@ pub struct HouseResponse {
     longitude: f32,
     property_type: String,
     description: String,
-    price: String,
-    listing_id: String,
     agent_name: String,
     first_published_date: String,
     displayable_address: String,
     price_modifier: Option<String>,
     floor_plan: Option<Vec<String>>,
     street_name: String,
-    num_bathrooms: String,
+    #[serde(deserialize_with = "parse_i64")] listing_id: i64,
+    #[serde(deserialize_with = "parse_i64")] num_bathrooms: i64,
+    #[serde(deserialize_with = "parse_i64")] price: i64,
+    last_published_date: String,
     // TODO: add this
     // price_change: ...,
-    last_published_date: String,
     // TODO: add this
     // price_change_summary: ...,
 }
 
-fn parse_i64<'de, D>(deserializer: D) -> Result<i64, D::Error>
+fn parse_i64<'de, D>(deserializer: D) -> ::std::result::Result<i64, D::Error>
 where
     D: Deserializer<'de>,
 {
     let s = String::deserialize(deserializer)?;
-    Ok(i64::from_str(&s).unwrap())
+    Ok(i64::from_str(&s).expect(&format!("converting string {} into integer", s)))
 }

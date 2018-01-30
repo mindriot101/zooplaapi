@@ -50,7 +50,7 @@ impl Default for ZooplaQuerySettings {
             minimum_beds: 4,
             property_type: "houses".to_string(),
             new_homes: false,
-            page_size: 100,
+            page_size: 10,
         }
     }
 }
