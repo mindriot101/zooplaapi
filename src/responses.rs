@@ -2,12 +2,12 @@ use std::str::FromStr;
 use serde::de::{Deserialize, Deserializer};
 
 #[derive(Deserialize, Debug)]
-pub(crate) struct HousesResponse {
+pub struct HousesResponse {
     pub listing: Vec<HouseResponse>,
 }
 
 #[derive(Deserialize, Debug)]
-pub(crate) struct HouseResponse {
+pub struct HouseResponse {
     #[serde(deserialize_with = "parse_i64")] num_bedrooms: i64,
     latitude: f32,
     longitude: f32,
