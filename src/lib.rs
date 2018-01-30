@@ -109,20 +109,32 @@ mod tests {
         F: Fn(),
     {
         let content = include_str!("../fixtures/houses.json");
-        let m = mock("GET", Matcher::Any).with_body(content).create();
+        let m = mock(
+            "GET",
+            Matcher::Regex(r"/api/v1/property_listings.js\?.*".to_string()),
+        ).with_body(content)
+            .create();
         f();
         m.assert();
     }
 
-    #[test]
-    fn test_something() {
+    fn send_request<F>(f: F)
+    where
+        F: Fn(&responses::HousesResponse),
+    {
         mock_http(|| {
             dotenv::dotenv().ok();
             let zoopla_key = env::var("ZOOPLA_KEY").unwrap();
             let mut api = Zoopla::new_session(&zoopla_key).unwrap();
             let properties = api.properties(ZooplaQuerySettings::default()).unwrap();
-            let listings = properties.listing;
-            assert_eq!(listings.len(), 10);
+            f(&properties)
+        });
+    }
+
+    #[test]
+    fn test_something() {
+        send_request(|_properties| {
+            assert!(true);
         });
     }
 }
