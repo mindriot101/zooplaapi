@@ -2,11 +2,6 @@ use std::str::FromStr;
 use serde::de::{Deserialize, Deserializer};
 
 #[derive(Deserialize, Debug)]
-pub(crate) struct SessionResponse {
-    pub session_id: String,
-}
-
-#[derive(Deserialize, Debug)]
 pub(crate) struct HousesResponse {
     pub listing: Vec<HouseResponse>,
 }

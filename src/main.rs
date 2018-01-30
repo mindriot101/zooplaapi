@@ -11,22 +11,19 @@ use failure::Error;
 
 mod responses;
 
-use responses::{HousesResponse, SessionResponse};
+use responses::HousesResponse;
 
 type Result<T> = std::result::Result<T, Error>;
 
 struct Zoopla {
-    pub session_id: String,
     pub api_key: String,
     pub client: reqwest::Client,
 }
 
 impl Zoopla {
     pub fn new_session(api_key: &str) -> Result<Zoopla> {
-        let mut client = reqwest::Client::new();
-        let session_key = Self::get_session_id(&mut client, api_key)?;
+        let client = reqwest::Client::new();
         Ok(Zoopla {
-            session_id: session_key,
             api_key: api_key.to_string(),
             client: client,
         })
@@ -55,17 +52,6 @@ impl Zoopla {
 
         let result: HousesResponse = resp.json()?;
         Ok(result)
-    }
-
-    fn get_session_id(client: &mut reqwest::Client, api_key: &str) -> Result<String> {
-        let mut resp = client
-            .get("https://api.zoopla.co.uk/api/v1/get_session_id.js")
-            .query(&[("api_key", api_key)])
-            .send()?
-            .error_for_status()?;
-
-        let result: SessionResponse = resp.json()?;
-        Ok(result.session_id)
     }
 }
 
