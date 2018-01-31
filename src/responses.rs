@@ -4,6 +4,16 @@ use serde::de::{Deserialize, Deserializer};
 #[derive(Deserialize, Debug)]
 pub struct HousesResponse {
     pub listing: Vec<HouseResponse>,
+    pub county: String,
+    pub bounding_box: BoundingBoxResponse,
+}
+
+#[derive(Deserialize, Debug)]
+pub struct BoundingBoxResponse {
+    #[serde(deserialize_with = "parse_f32")] pub longitude_min: f32,
+    #[serde(deserialize_with = "parse_f32")] pub longitude_max: f32,
+    #[serde(deserialize_with = "parse_f32")] pub latitude_min: f32,
+    #[serde(deserialize_with = "parse_f32")] pub latitude_max: f32,
 }
 
 #[derive(Deserialize, Debug)]
@@ -48,4 +58,12 @@ where
 {
     let s = String::deserialize(deserializer)?;
     Ok(i64::from_str(&s).expect(&format!("converting string {} into integer", s)))
+}
+
+fn parse_f32<'de, D>(deserializer: D) -> ::std::result::Result<f32, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let s = String::deserialize(deserializer)?;
+    Ok(f32::from_str(&s).expect(&format!("converting string {} into integer", s)))
 }
