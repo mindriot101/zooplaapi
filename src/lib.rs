@@ -70,6 +70,9 @@ impl Zoopla {
     }
 
     pub fn properties(&mut self, settings: ZooplaQuerySettings) -> Result<HousesResponse> {
+        let include_sold = Self::bool_to_string(settings.include_sold);
+        let include_rented = Self::bool_to_string(settings.include_rented);
+
         let mut resp = self.client
             .get(&self.listings_url())
             .query(&[
@@ -77,8 +80,8 @@ impl Zoopla {
                 ("radius", &settings.radius.to_string()),
                 ("postcode", &settings.postcode),
                 ("listing_status", &settings.listing_status),
-                ("include_sold", &settings.include_sold.to_string()),
-                ("include_rented", &settings.include_rented.to_string()),
+                ("include_sold", &include_sold),
+                ("include_rented", &include_rented),
                 ("minimum_price", &settings.minimum_price.to_string()),
                 ("maximum_price", &settings.maximum_price.to_string()),
                 ("minimum_beds", &settings.minimum_beds.to_string()),
@@ -95,6 +98,14 @@ impl Zoopla {
 
     fn listings_url(&self) -> String {
         format!("{}/api/v1/property_listings.js", URL)
+    }
+
+    fn bool_to_string(value: bool) -> String {
+        if value {
+            "1".to_string()
+        } else {
+            "0".to_string()
+        }
     }
 }
 
