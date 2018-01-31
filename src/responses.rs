@@ -23,10 +23,23 @@ pub struct HouseResponse {
     #[serde(deserialize_with = "parse_i64")] pub num_bedrooms: i64,
     #[serde(deserialize_with = "parse_i64")] pub price: i64,
     pub last_published_date: String,
-    // TODO: add this
-    // price_change: ...,
-    // TODO: add this
-    // price_change_summary: ...,
+    price_change: Option<Vec<PriceChangeResponse>>,
+    price_change_summary: Option<PriceChangeSummaryResponse>,
+}
+
+#[derive(Deserialize, Debug)]
+pub struct PriceChangeResponse {
+    pub direction: String,
+    pub date: String,
+    pub percent: String,
+    #[serde(deserialize_with = "parse_i64")] pub price: i64,
+}
+
+#[derive(Deserialize, Debug)]
+pub struct PriceChangeSummaryResponse {
+    pub direction: String,
+    pub percent: String,
+    pub last_updated_date: String,
 }
 
 fn parse_i64<'de, D>(deserializer: D) -> ::std::result::Result<i64, D::Error>
