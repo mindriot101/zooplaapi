@@ -131,10 +131,22 @@ mod tests {
         });
     }
 
-    #[test]
-    fn test_something() {
-        send_request(|_properties| {
-            assert!(true);
+    fn first_property<F>(f: F)
+    where
+        F: Fn(&responses::HouseResponse),
+    {
+        send_request(|properties| {
+            f(&properties.listing[0]);
         });
     }
+
+    #[test]
+    fn test_first_property() {
+        first_property(|p| {
+            assert_eq!(p.price, 500000);
+            assert_eq!(p.num_bathrooms, 3);
+            assert_eq!(p.num_bedrooms, 6);
+        });
+    }
+
 }
