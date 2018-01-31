@@ -3,11 +3,13 @@ rust:
   - stable
   - beta
   - nightly
+env:
+  - ZOOPLA_KEY=notusedintests
 matrix:
   allow_failures:
     - rust: nightly
 script:
-  - cargo build --verbose --all
-  - cargo test --verbose --all
+  - cargo build --all
+  - cargo test --all
 
 # vim: sw=2:ts=2
