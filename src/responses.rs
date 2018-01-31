@@ -22,7 +22,11 @@ pub struct HouseResponse {
     pub longitude: f32,
     pub property_type: String,
     pub description: String,
+    pub category: String,
+    pub property_report_url: String,
+    pub details_url: String,
     pub agent_name: String,
+    pub agent_phone: String,
     pub first_published_date: String,
     pub displayable_address: String,
     pub price_modifier: Option<String>,
@@ -31,10 +35,11 @@ pub struct HouseResponse {
     #[serde(deserialize_with = "parse_i64")] pub listing_id: i64,
     #[serde(deserialize_with = "parse_i64")] pub num_bathrooms: i64,
     #[serde(deserialize_with = "parse_i64")] pub num_bedrooms: i64,
+    #[serde(deserialize_with = "parse_i64")] pub num_floors: i64,
     #[serde(deserialize_with = "parse_i64")] pub price: i64,
     pub last_published_date: String,
-    price_change: Option<Vec<PriceChangeResponse>>,
-    price_change_summary: Option<PriceChangeSummaryResponse>,
+    pub price_change: Option<Vec<PriceChangeResponse>>,
+    pub price_change_summary: Option<PriceChangeSummaryResponse>,
 }
 
 #[derive(Deserialize, Debug)]

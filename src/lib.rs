@@ -157,6 +157,9 @@ mod tests {
             assert_eq!(p.price, 500000);
             assert_eq!(p.num_bathrooms, 3);
             assert_eq!(p.num_bedrooms, 6);
+            assert_eq!(p.num_floors, 0);
+            assert_eq!(p.category, "Residential".to_string());
+            assert_eq!(p.property_type, "Detached house".to_string());
         });
     }
 
