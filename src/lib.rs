@@ -11,12 +11,11 @@ extern crate serde_derive;
 extern crate serde_json;
 
 pub mod result;
-pub mod responses;
 pub mod zoopla;
 mod db;
 
 pub use result::Result;
-pub use zoopla::{Zoopla, ZooplaQuerySettings};
+pub use zoopla::api::{Zoopla, ZooplaQuerySettings};
 
 #[cfg(test)]
 mod tests {

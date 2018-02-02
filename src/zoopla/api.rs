@@ -1,6 +1,6 @@
 use reqwest::Client;
 pub use result::Result;
-use responses::HousesResponse;
+use zoopla::responses::HousesResponse;
 
 #[cfg(test)]
 use mockito::SERVER_URL;
