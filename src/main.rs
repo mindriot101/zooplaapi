@@ -1,10 +1,8 @@
 extern crate dotenv;
 extern crate zooplaapi;
 
-use std::env;
-use zooplaapi::{Result, Zoopla, ZooplaQuerySettings};
+use zooplaapi::Result;
 // use zooplaapi::db::create_house;
-use zooplaapi::db::connection::establish_connection;
 
 fn main() {
     dotenv::dotenv().ok();
