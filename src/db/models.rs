@@ -1,13 +1,17 @@
-use super::schema::houses;
+// use super::schema::*;
 
-#[derive(Queryable)]
+#[derive(Queryable, Debug)]
 pub struct House {
     pub id: i32,
     pub price: i32,
+    pub first_published_date: String,
+    pub last_published_date: String,
 }
 
-#[derive(Insertable)]
-#[table_name = "houses"]
-pub struct NewHouse {
-    pub price: i32,
+#[derive(Queryable, Debug)]
+pub struct Category {
+    pub id: i32,
+    pub property_type: String,
+    pub category: String,
+    pub price_modifier: Option<String>,
 }

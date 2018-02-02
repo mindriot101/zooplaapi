@@ -3,7 +3,7 @@ extern crate zooplaapi;
 
 use std::env;
 use zooplaapi::{Result, Zoopla, ZooplaQuerySettings};
-use zooplaapi::db::create_house;
+// use zooplaapi::db::create_house;
 use zooplaapi::db::connection::establish_connection;
 
 fn main() {
@@ -15,6 +15,11 @@ fn main() {
 }
 
 fn run() -> Result<()> {
+    use zooplaapi::db::foo;
+
+    foo();
+
+    /*
     let zoopla_key = env::var("ZOOPLA_KEY")?;
     let connection = establish_connection()?;
     let mut api = Zoopla::new_session(&zoopla_key)?;
@@ -22,7 +27,8 @@ fn run() -> Result<()> {
         ..Default::default()
     })?;
     for property in properties.listing {
-        create_house(&connection, property.price as _);
+        // create_house(&connection, property.price as _);
     }
+    */
     Ok(())
 }
