@@ -1,6 +1,6 @@
+#[macro_use]
 extern crate diesel;
 extern crate dotenv;
-#[macro_use]
 extern crate failure;
 #[cfg(test)]
 extern crate mockito;
@@ -12,7 +12,7 @@ extern crate serde_json;
 
 pub mod result;
 pub mod zoopla;
-mod db;
+pub mod db;
 
 pub use result::Result;
 pub use zoopla::api::{Zoopla, ZooplaQuerySettings};
