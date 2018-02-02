@@ -18,28 +18,38 @@ pub struct BoundingBoxResponse {
 
 #[derive(Deserialize, Debug)]
 pub struct HouseResponse {
-    pub latitude: f32,
-    pub longitude: f32,
-    pub property_type: String,
-    pub description: String,
-    pub category: String,
-    pub property_report_url: String,
-    pub details_url: String,
-    pub agent_name: String,
-    pub agent_phone: String,
-    pub first_published_date: String,
-    pub displayable_address: String,
-    pub price_modifier: Option<String>,
-    pub floor_plan: Option<Vec<String>>,
-    pub street_name: String,
     #[serde(deserialize_with = "parse_i64")] pub listing_id: i64,
-    #[serde(deserialize_with = "parse_i64")] pub num_bathrooms: i64,
-    #[serde(deserialize_with = "parse_i64")] pub num_bedrooms: i64,
-    #[serde(deserialize_with = "parse_i64")] pub num_floors: i64,
     #[serde(deserialize_with = "parse_i64")] pub price: i64,
+    pub first_published_date: String,
     pub last_published_date: String,
     pub price_change: Option<Vec<PriceChangeResponse>>,
     pub price_change_summary: Option<PriceChangeSummaryResponse>,
+
+    /* Location */
+    pub latitude: f32,
+    pub longitude: f32,
+    pub street_name: String,
+    pub displayable_address: String,
+
+    /* Categories */
+    pub property_type: String,
+    pub category: String,
+    pub price_modifier: Option<String>,
+
+    /* Agent */
+    pub agent_name: String,
+    pub agent_phone: String,
+
+    /* URLs */
+    pub details_url: String,
+    pub property_report_url: String,
+    pub floor_plan: Option<Vec<String>>,
+
+    /* Property */
+    pub description: String,
+    #[serde(deserialize_with = "parse_i64")] pub num_bathrooms: i64,
+    #[serde(deserialize_with = "parse_i64")] pub num_bedrooms: i64,
+    #[serde(deserialize_with = "parse_i64")] pub num_floors: i64,
 }
 
 #[derive(Deserialize, Debug)]
