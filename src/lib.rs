@@ -22,6 +22,7 @@ mod tests {
     use mockito::{mock, Matcher};
     use std::env;
     use super::*;
+    use super::zoopla::responses;
 
     fn mock_http<F>(f: F)
     where
