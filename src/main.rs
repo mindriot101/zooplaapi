@@ -13,10 +13,6 @@ fn main() {
 }
 
 fn run() -> Result<()> {
-    use zooplaapi::db::foo;
-
-    foo();
-
     /*
     let zoopla_key = env::var("ZOOPLA_KEY")?;
     let connection = establish_connection()?;

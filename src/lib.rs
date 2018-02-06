@@ -22,7 +22,11 @@ mod tests {
     use mockito::{mock, Matcher};
     use std::env;
     use super::*;
+    use diesel::prelude::*;
     use super::zoopla::responses;
+    use super::db::connection::establish_connection;
+    use super::db::create_property;
+    use super::db::schema::*;
 
     fn mock_http<F>(f: F)
     where
@@ -72,4 +76,47 @@ mod tests {
         });
     }
 
+    fn insert<F>(f: F)
+    where
+        F: Fn(&PgConnection),
+    {
+        let connection = establish_connection().unwrap();
+        first_property(|p| {
+            connection.test_transaction::<_, ::diesel::result::Error, _>(|| {
+                create_property(p, &connection);
+                f(&connection);
+                Ok(())
+            });
+        });
+    }
+
+    #[test]
+    fn test_insert_house() {
+        insert(|conn| assert_eq!(houses::table.count().get_result(conn), Ok(1)));
+    }
+
+    #[test]
+    fn test_insert_agent() {
+        insert(|conn| assert_eq!(houses_agents::table.count().get_result(conn), Ok(1)));
+    }
+
+    #[test]
+    fn test_insert_categories() {
+        insert(|conn| assert_eq!(houses_categories::table.count().get_result(conn), Ok(1)));
+    }
+
+    #[test]
+    fn test_insert_locations() {
+        insert(|conn| assert_eq!(houses_locations::table.count().get_result(conn), Ok(1)));
+    }
+
+    #[test]
+    fn test_insert_property() {
+        insert(|conn| assert_eq!(houses_properties::table.count().get_result(conn), Ok(1)));
+    }
+
+    #[test]
+    fn test_insert_urls() {
+        insert(|conn| assert_eq!(houses_urls::table.count().get_result(conn), Ok(1)));
+    }
 }

@@ -10,16 +10,22 @@ pub struct HousesResponse {
 
 #[derive(Deserialize, Debug)]
 pub struct BoundingBoxResponse {
-    #[serde(deserialize_with = "parse_f32")] pub longitude_min: f32,
-    #[serde(deserialize_with = "parse_f32")] pub longitude_max: f32,
-    #[serde(deserialize_with = "parse_f32")] pub latitude_min: f32,
-    #[serde(deserialize_with = "parse_f32")] pub latitude_max: f32,
+    #[serde(deserialize_with = "parse_f32")]
+    pub longitude_min: f32,
+    #[serde(deserialize_with = "parse_f32")]
+    pub longitude_max: f32,
+    #[serde(deserialize_with = "parse_f32")]
+    pub latitude_min: f32,
+    #[serde(deserialize_with = "parse_f32")]
+    pub latitude_max: f32,
 }
 
 #[derive(Deserialize, Debug)]
 pub struct HouseResponse {
-    #[serde(deserialize_with = "parse_i64")] pub listing_id: i64,
-    #[serde(deserialize_with = "parse_i64")] pub price: i64,
+    #[serde(deserialize_with = "parse_i64")]
+    pub listing_id: i64,
+    #[serde(deserialize_with = "parse_i64")]
+    pub price: i64,
     pub first_published_date: String,
     pub last_published_date: String,
     pub price_change: Option<Vec<PriceChangeResponse>>,
@@ -47,9 +53,12 @@ pub struct HouseResponse {
 
     /* Property */
     pub description: String,
-    #[serde(deserialize_with = "parse_i64")] pub num_bathrooms: i64,
-    #[serde(deserialize_with = "parse_i64")] pub num_bedrooms: i64,
-    #[serde(deserialize_with = "parse_i64")] pub num_floors: i64,
+    #[serde(deserialize_with = "parse_i64")]
+    pub num_bathrooms: i64,
+    #[serde(deserialize_with = "parse_i64")]
+    pub num_bedrooms: i64,
+    #[serde(deserialize_with = "parse_i64")]
+    pub num_floors: i64,
 }
 
 #[derive(Deserialize, Debug)]
@@ -57,7 +66,8 @@ pub struct PriceChangeResponse {
     pub direction: String,
     pub date: String,
     pub percent: String,
-    #[serde(deserialize_with = "parse_i64")] pub price: i64,
+    #[serde(deserialize_with = "parse_i64")]
+    pub price: i64,
 }
 
 #[derive(Deserialize, Debug)]
