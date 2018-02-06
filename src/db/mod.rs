@@ -15,6 +15,7 @@ pub fn create_property<'a>(r: &'a HouseResponse, conn: &PgConnection) {
             houses::price.eq(r.price as i32),
             houses::first_published_date.eq(&r.first_published_date),
             houses::last_published_date.eq(&r.last_published_date),
+            houses::listing_id.eq(r.listing_id as i32),
         ))
         .get_result(conn)
         .expect("inserting house");

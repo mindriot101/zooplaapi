@@ -10,3 +10,10 @@ pub fn establish_connection() -> Result<PgConnection> {
     let database_url = env::var("DATABASE_URL")?;
     Ok(PgConnection::establish(&database_url).expect("connecting to database"))
 }
+
+pub(crate) fn establish_test_connection() -> Result<PgConnection> {
+    dotenv().ok();
+
+    let database_url = env::var("TEST_DATABASE_URL")?;
+    Ok(PgConnection::establish(&database_url).expect("connecting to database"))
+}

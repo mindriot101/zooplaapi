@@ -4,4 +4,5 @@ pub struct House {
     pub price: i32,
     pub first_published_date: String,
     pub last_published_date: String,
+    pub listing_id: i32,
 }

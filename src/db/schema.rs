@@ -4,6 +4,7 @@ table! {
         price -> Int4,
         first_published_date -> Varchar,
         last_published_date -> Varchar,
+        listing_id -> Int4,
     }
 }
 

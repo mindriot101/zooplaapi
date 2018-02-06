@@ -43,7 +43,7 @@ mod tests {
     use super::*;
     use diesel::prelude::*;
     use super::zoopla::responses;
-    use super::db::connection::establish_connection;
+    use super::db::connection::establish_test_connection;
     use super::db::create_property;
     use super::db::schema::*;
 
@@ -99,7 +99,7 @@ mod tests {
     where
         F: Fn(&PgConnection),
     {
-        let connection = establish_connection().unwrap();
+        let connection = establish_test_connection().unwrap();
         first_property(|p| {
             connection.test_transaction::<_, ::diesel::result::Error, _>(|| {
                 create_property(p, &connection);
