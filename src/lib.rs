@@ -14,8 +14,27 @@ pub mod result;
 pub mod zoopla;
 pub mod db;
 
+use std::env;
 pub use result::Result;
 pub use zoopla::api::{Zoopla, ZooplaQuerySettings};
+use db::create_property;
+use diesel::prelude::*;
+
+pub fn run() -> Result<()> {
+    let zoopla_key = env::var("ZOOPLA_KEY")?;
+    let connection = db::connection::establish_connection()?;
+    let mut api = Zoopla::new_session(&zoopla_key)?;
+    let properties = api.properties(ZooplaQuerySettings {
+        ..Default::default()
+    })?;
+    for property in properties.listing {
+        connection.transaction::<_, ::diesel::result::Error, _>(|| {
+            create_property(&property, &connection);
+            Ok(())
+        })?;
+    }
+    Ok(())
+}
 
 #[cfg(test)]
 mod tests {
