@@ -3,13 +3,17 @@ rust:
   - stable
   - beta
   - nightly
+services:
+  - postgresql
 env:
   - ZOOPLA_KEY=notusedintests
 matrix:
   allow_failures:
     - rust: nightly
+before_script:
+  - psql -c 'create database zooplaapi_test;' -U postgres
 script:
   - cargo build --all
-  - cargo test --all
+  - DATABASE_URL=postgres://postgres@localhost/zooplaapi cargo test --all -- --test-threads 1
 
 # vim: sw=2:ts=2
