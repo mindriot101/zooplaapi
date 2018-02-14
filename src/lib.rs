@@ -21,19 +21,22 @@ use db::create_property;
 use diesel::prelude::*;
 
 pub fn run() -> Result<()> {
-    let zoopla_key = env::var("ZOOPLA_KEY")?;
-    let connection = db::connection::establish_connection()?;
-    let mut api = Zoopla::new_session(&zoopla_key)?;
-    let properties = api.properties(ZooplaQuerySettings {
-        ..Default::default()
-    })?;
-    for property in properties.listing {
-        connection.transaction::<_, ::diesel::result::Error, _>(|| {
-            create_property(&property, &connection);
-            Ok(())
-        })?;
-    }
+    use db::schema::*;
+    let connection = db::connection::establish_test_connection()?;
     Ok(())
+    // let zoopla_key = env::var("ZOOPLA_KEY")?;
+    // let connection = db::connection::establish_connection()?;
+    // let mut api = Zoopla::new_session(&zoopla_key)?;
+    // let properties = api.properties(ZooplaQuerySettings {
+    //     ..Default::default()
+    // })?;
+    // for property in properties.listing {
+    //     connection.transaction::<_, ::diesel::result::Error, _>(|| {
+    //         create_property(&property, &connection);
+    //         Ok(())
+    //     })?;
+    // }
+    // Ok(())
 }
 
 #[cfg(test)]
@@ -43,7 +46,7 @@ mod tests {
     use super::*;
     use diesel::prelude::*;
     use super::zoopla::responses;
-    use super::db::connection::establish_test_connection;
+    use super::db::connection::{establish_test_connection, initialize};
     use super::db::create_property;
     use super::db::schema::*;
 
@@ -100,6 +103,7 @@ mod tests {
         F: Fn(&PgConnection),
     {
         let connection = establish_test_connection().unwrap();
+        initialize(&connection);
         first_property(|p| {
             connection.test_transaction::<_, ::diesel::result::Error, _>(|| {
                 create_property(p, &connection);
