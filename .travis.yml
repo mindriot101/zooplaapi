@@ -6,8 +6,7 @@ rust:
 services:
   - postgresql
 env:
-  - ZOOPLA_KEY=notusedintests
-  - RUST_BACKTRACE=1
+  - ZOOPLA_KEY=notusedintests RUST_BACKTRACE=1
 matrix:
   allow_failures:
     - rust: nightly
